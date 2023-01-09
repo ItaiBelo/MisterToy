@@ -15,6 +15,7 @@ export function ToyIndex() {
     const toys = useSelector((storeState) => storeState.toyModule.toys)
     const isLoading = useSelector((storeState) => storeState.toyModule.isLoading)
     const shoppingCart = useSelector((storeState) => storeState.toyModule.shoppingCart)
+
     // const [toys, setToys] = useState([])
     // const [toyt, setToyt] = useState([])
 
@@ -83,8 +84,8 @@ export function ToyIndex() {
     return <section>
         <h3>Toys App</h3>
         <main>
-            <Link to={`/toy/edit`}>Add Toy</Link>
-            <button onClick={onAddToy}>Add random Toy ⛐</button>
+            <Link to={`/add`}>Add Toy</Link>
+            <button onClick={onAddToy}>Add random Toy</button>
 
             <ToyFilter onSetFilter={setFilter} />
             {isLoading && <p>Loading...</p>}

@@ -3,6 +3,7 @@ import { store } from './store.js'
 import { REMOVE_TOY, SET_TOYS, ADD_TOY, UPDATE_TOY, UNDO_REMOVE_TOY, SET_IS_LOADING } from './toy.reducer.js'
 
 export function loadToys(filterBy) {
+    console.log(filterBy);
     store.dispatch({ type: SET_IS_LOADING, isLoading: true })
     return ToyService.query(filterBy)
         .then((toys) => {

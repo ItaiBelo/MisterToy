@@ -13,7 +13,9 @@
   justify-content: space-between;
 }
 
-.header-nav {}
+.header-nav {
+  text-align: right;
+}
 
 .user-info {
   display: flex;

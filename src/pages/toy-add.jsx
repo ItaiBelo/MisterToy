@@ -4,7 +4,7 @@ import { useNavigate, useParams, Link } from 'react-router-dom'
 import { ToyService } from "../services/toy.service.js"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 
-export function ToyEdit() {
+export function ToyAdd() {
     const [toyToEdit, setToyToEdit] = useState(ToyService.getEmptyToy())
     const navigate = useNavigate()
     const { toyId } = useParams()

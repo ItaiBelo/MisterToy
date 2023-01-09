@@ -5,7 +5,7 @@ import { userService } from './user.service.js'
 
 const STORAGE_KEY = 'toyDB'
 
-
+_createToys()
 export const ToyService = {
     query,
     getById,
@@ -20,9 +20,10 @@ export const ToyService = {
 function query(filterBy = getDefaultFilter()) {
     return storageService.query(STORAGE_KEY)
         .then(toys => {
-            if (filterBy.txt) {
-                const regex = new RegExp(filterBy.txt, 'i')
-                toys = toys.filter(toy => regex.test(toy.vendor))
+            if (filterBy.name) {
+                console.log(filterBy)
+                const regex = new RegExp(filterBy.name, 'i')
+                toys = toys.filter(toy => regex.test(toy.name))
             }
             if (filterBy.maxPrice) {
                 toys = toys.filter(toy => toy.price <= filterBy.maxPrice)
@@ -42,16 +43,17 @@ function remove(toyId) {
 }
 function save(toy) {
     if (toy._id) {
+        console.log('storageService put')
         return storageService.put(STORAGE_KEY, toy)
     } else {
         // when switching to backend - remove the next line
-        toy.owner = userService.getLoggedinUser()
+        console.log('storageService post')
         return storageService.post(STORAGE_KEY, toy)
     }
 }
 
 function getDefaultFilter() {
-    return { txt: '', maxPrice: 0 }
+    return { name: '', maxPrice: 0 }
 }
 function getEmptyToy() {
     return {
@@ -59,13 +61,127 @@ function getEmptyToy() {
         price: 0,
     }
 }
+function _getRandomLabels(n) {
+    const labels = ["On wheels", "Box game", "Art", "Baby", "Doll", "Puzzle", "Outdoor", "Battery Powered"]
+    const randomLabels = []
+    for (let i = 0; i < n; i++) {
+        const randomIndex = Math.floor(Math.random() * labels.length)
+        randomLabels.push(labels[randomIndex])
+    }
+    console.log(randomLabels)
+    return randomLabels
+}
 
 function getRandomToy() {
     return {
-        vendor: 'Susita-' + (Date.now() % 1000),
-        price: utilService.getRandomIntInclusive(1000, 9000),
+        name: 'Toy' + utilService.getRandomIntInclusive(1, 200),
+        price: utilService.getRandomIntInclusive(1, 200),
+        labels: _getRandomLabels(utilService.getRandomIntInclusive(1, 5)),
+        createdAt: Date.now(),
+        inStock: true,
+        image: `../assets/img/${utilService.getRandomIntInclusive(1, 15)}.png`
     }
 }
+
+function _createToys() {
+    let toys = utilService.loadFromStorage(STORAGE_KEY)
+    if (!toys || !toys.length) {
+        toys = [
+
+            {
+                _id: "t101",
+                name: "Talking Doll",
+                price: 123,
+                labels: ["Doll", "Battery Powered", "Baby"],
+                createdAt: 1631031801011,
+                inStock: true,
+                image: `../assets/img/${utilService.getRandomIntInclusive(1, 15)}.png`
+
+            },
+            {
+                _id: "t102",
+                name: "Remote Control Car",
+                price: 30,
+                labels: ["On wheels", "Battery Powered"],
+                createdAt: 1630764800000,
+                inStock: false
+            },
+            {
+                _id: "t103",
+                name: "Lego Set",
+                price: 50,
+                labels: ["Box game"],
+                createdAt: 1631138400000,
+                inStock: true,
+                image: `../assets/img/${utilService.getRandomIntInclusive(1, 15)}.png`
+            },
+            {
+                _id: "t104",
+                name: "Watercolor Set",
+                price: 15,
+                labels: ["Art"],
+                createdAt: 1630976000000,
+                inStock: true,
+                image: `../assets/img/${utilService.getRandomIntInclusive(1, 15)}.png`
+            },
+            {
+                _id: "t105",
+                name: "Play Kitchen",
+                price: 80,
+                labels: ["Baby"],
+                createdAt: 1631343600000,
+                inStock: true,
+                image: `../assets/img/${utilService.getRandomIntInclusive(1, 15)}.png`
+            },
+            {
+                _id: "t106",
+                name: "Barbie Doll",
+                price: 20,
+                labels: ["Doll"],
+                createdAt: 1631107200000,
+                inStock: false
+            },
+            {
+                _id: "t107",
+                name: "Jigsaw Puzzle",
+                price: 10,
+                labels: ["Puzzle"],
+                createdAt: 1631223600000,
+                inStock: true,
+                image: `../assets/img/${utilService.getRandomIntInclusive(1, 15)}.png`
+            },
+            {
+                _id: "t108",
+                name: "Trampoline",
+                price: 100,
+                labels: ["Outdoor"],
+                createdAt: 1630882800000,
+                inStock: true,
+                image: `../assets/img/${utilService.getRandomIntInclusive(1, 15)}.png`
+            },
+            {
+                _id: "t109",
+                name: "Ride-On Toy",
+                price: 60,
+                labels: ["On wheels", "Battery Powered", "Outdoor"],
+                createdAt: 1631016400000,
+                inStock: false
+            },
+            {
+                _id: "t110",
+                name: "Teddy Bear",
+                price: 15,
+                labels: ["Doll", "Baby"],
+                createdAt: 1630976000000,
+                inStock: true,
+                image: `../assets/img/${utilService.getRandomIntInclusive(1, 15)}.png`
+            }
+        ]
+        utilService.saveToStorage(STORAGE_KEY, toys)
+    }
+}
+
+
 
 // TEST DATA
 // storageService.post(STORAGE_KEY, {vendor: 'Subali Rahok 6', price: 980}).then(x => console.log(x))
