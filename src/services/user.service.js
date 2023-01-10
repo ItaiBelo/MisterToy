@@ -27,8 +27,9 @@ function login({ username, password }) {
         })
 }
 
-function signup({ username, password, fullname }) {
-    const user = { username, password, fullname, score: 10000 }
+function signup({ username, password, fullname, email }) {
+    console.log({ username, password, fullname, email })
+    const user = { username, password, fullname, score: 10000, email }
     return storageService.post(STORAGE_KEY, user)
         .then(_setLoggedinUser)
 }

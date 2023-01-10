@@ -1,34 +1,15 @@
 .toy-filter {
     background-color: var(--gray1);
     padding: 1em;
+    display: flex;
+    justify-content: space-between;
 }
 
-.menu {
-    list-style: none;
-    margin-top: 8px;
-    padding: 0.2em;
-    background-color: eaf1fb;
-    border-radius: 15px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0;
-    display: none;
-
-    z-index: 5;
+.filter-form {
+    display: flex;
+    align-items: center;
 }
 
-.menu li {
-    cursor: pointer;
-    font-size: 14px;
-    padding: 0.7em 0.5em;
-    margin: 0.3em 0;
-    border-radius: 0.5em;
-}
-
-.search-btn:hover,
-.menu li:hover,
-.close:hover {
-    transition: 0.4s;
-    background-color: #20212416;
+.filter-multiselect {
+    color: rebeccapurple;
 }

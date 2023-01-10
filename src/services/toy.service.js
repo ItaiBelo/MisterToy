@@ -79,7 +79,7 @@ function getRandomToy() {
         labels: _getRandomLabels(utilService.getRandomIntInclusive(1, 5)),
         createdAt: Date.now(),
         inStock: true,
-        image: `../assets/img/${utilService.getRandomIntInclusive(1, 15)}.png`
+        image: utilService.getRandomIntInclusive(1, 15)
     }
 }
 
@@ -95,7 +95,7 @@ function _createToys() {
                 labels: ["Doll", "Battery Powered", "Baby"],
                 createdAt: 1631031801011,
                 inStock: true,
-                image: `../assets/img/${utilService.getRandomIntInclusive(1, 15)}.png`
+                image: utilService.getRandomIntInclusive(1, 15)
 
             },
             {
@@ -104,7 +104,8 @@ function _createToys() {
                 price: 30,
                 labels: ["On wheels", "Battery Powered"],
                 createdAt: 1630764800000,
-                inStock: false
+                inStock: false,
+                image: utilService.getRandomIntInclusive(1, 15)
             },
             {
                 _id: "t103",
@@ -113,7 +114,7 @@ function _createToys() {
                 labels: ["Box game"],
                 createdAt: 1631138400000,
                 inStock: true,
-                image: `../assets/img/${utilService.getRandomIntInclusive(1, 15)}.png`
+                image: utilService.getRandomIntInclusive(1, 15)
             },
             {
                 _id: "t104",
@@ -122,7 +123,7 @@ function _createToys() {
                 labels: ["Art"],
                 createdAt: 1630976000000,
                 inStock: true,
-                image: `../assets/img/${utilService.getRandomIntInclusive(1, 15)}.png`
+                image: utilService.getRandomIntInclusive(1, 15)
             },
             {
                 _id: "t105",
@@ -131,7 +132,7 @@ function _createToys() {
                 labels: ["Baby"],
                 createdAt: 1631343600000,
                 inStock: true,
-                image: `../assets/img/${utilService.getRandomIntInclusive(1, 15)}.png`
+                image: utilService.getRandomIntInclusive(1, 15)
             },
             {
                 _id: "t106",
@@ -139,7 +140,9 @@ function _createToys() {
                 price: 20,
                 labels: ["Doll"],
                 createdAt: 1631107200000,
-                inStock: false
+                inStock: false,
+                image: utilService.getRandomIntInclusive(1, 15)
+
             },
             {
                 _id: "t107",
@@ -148,7 +151,7 @@ function _createToys() {
                 labels: ["Puzzle"],
                 createdAt: 1631223600000,
                 inStock: true,
-                image: `../assets/img/${utilService.getRandomIntInclusive(1, 15)}.png`
+                image: utilService.getRandomIntInclusive(1, 15)
             },
             {
                 _id: "t108",
@@ -157,7 +160,7 @@ function _createToys() {
                 labels: ["Outdoor"],
                 createdAt: 1630882800000,
                 inStock: true,
-                image: `../assets/img/${utilService.getRandomIntInclusive(1, 15)}.png`
+                image: utilService.getRandomIntInclusive(1, 15)
             },
             {
                 _id: "t109",
@@ -165,7 +168,8 @@ function _createToys() {
                 price: 60,
                 labels: ["On wheels", "Battery Powered", "Outdoor"],
                 createdAt: 1631016400000,
-                inStock: false
+                inStock: false,
+                image: utilService.getRandomIntInclusive(1, 15)
             },
             {
                 _id: "t110",
@@ -174,7 +178,7 @@ function _createToys() {
                 labels: ["Doll", "Baby"],
                 createdAt: 1630976000000,
                 inStock: true,
-                image: `../assets/img/${utilService.getRandomIntInclusive(1, 15)}.png`
+                image: utilService.getRandomIntInclusive(1, 15)
             }
         ]
         utilService.saveToStorage(STORAGE_KEY, toys)

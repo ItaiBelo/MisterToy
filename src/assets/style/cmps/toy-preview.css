@@ -5,6 +5,11 @@
     flex-direction: column;
 }
 
+.toy-preview-img {
+    height: 110px;
+    width: 125px;
+}
+
 .toy-preview h4 {
     text-transform: capitalize;
     color: black;
