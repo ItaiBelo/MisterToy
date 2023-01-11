@@ -6,11 +6,9 @@ import { useDispatch, useSelector } from 'react-redux'
 
 export function AppFooter() {
 
-    const count = useSelector((storeState) => storeState.appModule.count)
     const isCartShown = useSelector((storeState) => storeState.toyModule.isCartShown)
     const toysCount = useSelector((storeState) => storeState.toyModule.toys.length)
     const cart = useSelector((storeState) => storeState.toyModule.shoppingCart)
-    console.log('cart', cart);
     const dispatch = useDispatch()
 
     // TODO: move to storeState
@@ -28,7 +26,7 @@ export function AppFooter() {
                 Currently {toysCount} toys in the shop
             </h5>
             <p>
-                Coffeerights to all - Count: {count}
+                Coffeerights to all
             </p>
             {
                 <h5>

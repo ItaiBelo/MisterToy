@@ -2,10 +2,12 @@
 import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
+import { httpService } from './http.service.js'
 
 const STORAGE_KEY = 'toyDB'
+const BASE_URL = 'toy/'
 
-_createToys()
+// _createToys()
 export const ToyService = {
     query,
     getById,
@@ -16,41 +18,61 @@ export const ToyService = {
     getDefaultFilter
 }
 
-
 function query(filterBy = getDefaultFilter()) {
-    return storageService.query(STORAGE_KEY)
-        .then(toys => {
-            if (filterBy.name) {
-                console.log(filterBy)
-                const regex = new RegExp(filterBy.name, 'i')
-                toys = toys.filter(toy => regex.test(toy.name))
-            }
-            if (filterBy.maxPrice) {
-                toys = toys.filter(toy => toy.price <= filterBy.maxPrice)
-            }
-            return toys
-        })
+    const queryParams = `?name=${filterBy.name}&maxPrice=${filterBy.maxPrice}`
+    console.log(queryParams)
+    return httpService.get(BASE_URL + queryParams)
 }
+
+// function query(filterBy = getDefaultFilter()) {
+//     return storageService.query(STORAGE_KEY)
+//         .then(toys => {
+//             if (filterBy.name) {
+//                 console.log(filterBy)
+//                 const regex = new RegExp(filterBy.name, 'i')
+//                 toys = toys.filter(toy => regex.test(toy.name))
+//             }
+//             if (filterBy.maxPrice) {
+//                 toys = toys.filter(toy => toy.price <= filterBy.maxPrice)
+//             }
+//             return toys
+//         })
+// }
 
 
 
 function getById(toyId) {
-    return storageService.get(STORAGE_KEY, toyId)
+    // console.log(toyId)
+    return httpService.get(BASE_URL + toyId)
+    // return storageService.get(STORAGE_KEY, toyId)
 }
 function remove(toyId) {
-    // return Promise.reject('Not now!')
-    return storageService.remove(STORAGE_KEY, toyId)
+    // return storageService.remove(STORAGE_KEY, toyId)
+    console.log(BASE_URL + toyId)
+    return httpService.delete(BASE_URL + toyId)
 }
+
 function save(toy) {
+    console.log(toy._id)
     if (toy._id) {
-        console.log('storageService put')
-        return storageService.put(STORAGE_KEY, toy)
+        return httpService.put(BASE_URL, toy)
     } else {
         // when switching to backend - remove the next line
-        console.log('storageService post')
-        return storageService.post(STORAGE_KEY, toy)
+        // toy.owner = userService.getLoggedinUser()
+        return httpService.post(BASE_URL, toy)
     }
 }
+
+// function save(toy) {
+//     if (toy._id) {
+//         console.log('storageService put')
+//         return storageService.put(STORAGE_KEY, toy)
+//     } else {
+//         // when switching to backend - remove the next line
+//         console.log('storageService post')
+//         return storageService.post(STORAGE_KEY, toy)
+//     }
+// }
 
 function getDefaultFilter() {
     return { name: '', maxPrice: 0 }

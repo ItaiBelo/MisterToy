@@ -11,8 +11,6 @@ export const CLEAR_CART = 'CLEAR_CART'
 export const SET_IS_LOADING = 'SET_IS_LOADING'
 
 
-
-
 const initialState = {
     toys: [],
     lastRemovedToy: null,

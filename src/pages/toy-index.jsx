@@ -38,7 +38,7 @@ export function ToyIndex() {
     function onRemoveToy(toyId) {
         removeToy(toyId)
             .then(() => {
-                showSuccessMsg('Car removed')
+                showSuccessMsg('Toy removed')
             })
             .catch(err => {
                 showErrorMsg('Cannot remove toy')
@@ -76,9 +76,7 @@ export function ToyIndex() {
     }
 
     function setFilter(filterBy) {
-        console.log('setFilter', filterBy)
         onLoadToys(filterBy)
-
     }
 
     return <section>

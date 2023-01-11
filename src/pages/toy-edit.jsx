@@ -1,8 +1,29 @@
+
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import ModeEditRoundedIcon from '@mui/icons-material/ModeEditRounded';
 import { useState, useEffect } from 'react'
-import { useNavigate, useParams, Link } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { ToyService } from "../services/toy.service.js"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
+
+
+const theme = createTheme();
+
+function getEmptyToy() {
+    return {
+        name: '',
+        price: '',
+    }
+}
 
 export function ToyEdit() {
     const [toyToEdit, setToyToEdit] = useState(ToyService.getEmptyToy())
@@ -12,21 +33,16 @@ export function ToyEdit() {
     useEffect(() => {
         if (!toyId) return
         loadToy()
+        console.log(toyToEdit)
     }, [])
 
     function loadToy() {
         ToyService.getById(toyId)
             .then((toy) => setToyToEdit(toy))
             .catch((err) => {
-                console.log('Had issues in toy details', err)
+                console.log('Had issues in toys details', err)
                 navigate('/toy')
             })
-    }
-
-    function handleChange({ target }) {
-        let { value, type, name: field } = target
-        value = type === 'number' ? +value : value
-        setToyToEdit((prevToy) => ({ ...prevToy, [field]: value }))
     }
 
     function onSaveToy(ev) {
@@ -43,30 +59,70 @@ export function ToyEdit() {
             })
     }
 
-    return <section className="toy-edit">
-        <h2>{toyToEdit.id ? 'Edit this toy' : 'Add a new toy'}</h2>
+    function handleChange(ev) {
+        const field = ev.target.name
+        const value = ev.target.value
+        console.log(field, 'field', value, 'value')
+        setToyToEdit((prevToy) => ({ ...prevToy, [field]: value }))
+    }
 
-        <form onSubmit={onSaveToy}>
-            <label htmlFor="name">Name </label>
-            <input type="text"
-                name="name"
-                id="name"
-                placeholder="Enter the new name..."
-                value={toyToEdit.name}
-                onChange={handleChange}
-            />
-            <label htmlFor="price">Price : </label>
-            <input type="number"
-                name="price"
-                id="price"
-                placeholder="Enter the new price"
-                value={toyToEdit.price}
-                onChange={handleChange}
-            />
+    return (
+        <ThemeProvider theme={theme}>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <Box
+                    sx={{
+                        marginTop: 8,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                        <ModeEditRoundedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Edit the toy
+                    </Typography>
+                    <Box component="form" onSubmit={onSaveToy} noValidate sx={{ mt: 1 }}>
+                        <TextField
+                            value={toyToEdit.name}
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="name"
+                            // label="Name"
+                            name="name"
+                            autoComplete="name"
+                            autoFocus
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            value={toyToEdit.price}
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="price"
+                            // label="Price"
+                            type="number"
+                            id="price"
+                            autoComplete="current-price"
+                            onChange={handleChange}
 
-            <div>
-                <button>{toyToEdit._id ? 'Save' : 'Add'}</button>
-                <button onClick={() => { navigate(`/toy`) }}>Cancel</button>            </div>
-        </form>
-    </section>
+                        />
+
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                        >
+                            Save
+                        </Button>
+
+                    </Box>
+                </Box>
+            </Container>
+        </ThemeProvider>
+    );
 }

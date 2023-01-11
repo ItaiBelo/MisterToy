@@ -20,6 +20,7 @@ export function loadToys(filterBy) {
 
 // Example for Optimistic mutation:
 export function removeToy(toyId) {
+    debugger
     store.dispatch({ type: REMOVE_TOY, toyId })
     return ToyService.remove(toyId)
         .catch(err => {
